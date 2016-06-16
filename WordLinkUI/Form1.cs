@@ -81,12 +81,16 @@ namespace WordLinkUI
 
         private void btnCreateGame_Click(object sender, EventArgs e)
         {
-
+            createGame();
         }
 
         void transitionFromLobbyToGame()
         {
-
+            timerLobbyUpdate.Stop();
+            btnLogOut.Visible = false;
+            gbLobby.Visible = false;
+            gbGame.Visible = true;
+            timerGameUpdate.Start();
         }
 
         void transitionFromGameToLobby()
@@ -96,6 +100,7 @@ namespace WordLinkUI
 
         void transitionFromSignInToLobby()
         {
+            timerLobbyUpdate.Start();
             btnLogOut.Visible = true;
             gbLobby.Visible = true;
             gbLogin.Visible = false;
@@ -104,6 +109,7 @@ namespace WordLinkUI
 
         void transitionFromLobbyToSignIn()
         {
+            timerLobbyUpdate.Stop();
             btnLogOut.Visible = false;
             gbLobby.Visible = false;
             gbLogin.Visible = true;
@@ -113,7 +119,6 @@ namespace WordLinkUI
         void setUpLobby()
         {
             lblLobbyCurrentUser.Text = "Currently signed in as: " + StateMachine.server.getCurrentUser();
-            timerLobbyUpdate.Start();
         }
 
         async void createGame()
@@ -146,21 +151,63 @@ namespace WordLinkUI
             if (resp.worked)
             {
                 List<object> gamesList = resp.info.gamesList;
+                int selectedIndex = lboxGameList.SelectedIndex;
                 lboxGameList.Items.Clear();
                 foreach(object o in gamesList)
                 {
                     lboxGameList.Items.Add(o.ToString());
+                }
+                if(selectedIndex < gamesList.Count)
+                {
+                    lboxGameList.SelectedIndex = selectedIndex;
                 }
             }
             else
                 broadcastError(resp);
         }
 
-        void setUpSignIn()
+        async void submitDirection()
         {
-            timerLobbyUpdate.Stop();
+            string direction = rbFront.Checked ? "front" : "back";
+            WLServerResponse resp = await StateMachine.server.submitDirection(direction);
+            if (resp.worked)
+            {
+                changeToGuessMode();
+                updateGame();
+            }
+            else
+                broadcastError(resp);
+
         }
 
+        async void submitGuess()
+        {
+            string guess = txtGuess.Text;
+            WLServerResponse resp = await StateMachine.server.submitGuess(guess);
+            if (resp.worked)
+            {
+                if (resp.info.isCorrect)
+                {
+                    showCorrect();
+                }
+                else
+                {
+                    showIncorrect();
+                }
+                changeToWatchMode();
+                updateGame();
+            }
+            else
+                broadcastError(resp);
+
+        }
+
+        void setUpSignIn()
+        {
+
+        }
+
+        
 
         async void signUp()
         {
@@ -172,6 +219,117 @@ namespace WordLinkUI
             }
             else
                 broadcastError(resp);
+        }
+
+        async void updateGame()
+        {
+            WLServerResponse resp = await StateMachine.server.getGameSummary();
+            if (resp.worked)
+            {
+                lblGameID.Text = "Game ID: " + resp.info.summary.gameid;
+                List<dynamic> players = resp.info.summary.players;
+                List<ListViewItem> newItems = new List<ListViewItem>();
+                foreach (var eachPlayer in players)
+                {
+                    ListViewItem newItem = new ListViewItem(new string[] { eachPlayer["turn"]? ">":"" , eachPlayer["name"], eachPlayer["score"] + ""});
+                    newItems.Add(newItem);
+                }
+                listViewPlayers.Items.Clear();
+                listViewPlayers.Columns.Clear();
+                listViewPlayers.Columns.Add("Turn");
+                listViewPlayers.Columns.Add("Name");
+                listViewPlayers.Columns.Add("Score");
+                foreach (ListViewItem it in newItems)
+                {
+                    listViewPlayers.Items.Add(it);
+                }
+                lblCurrentPhrase.Text = resp.info.summary.phrase;
+                List<dynamic> gameLogs = resp.info.summary.guesslog;
+                txtGameLog.Text = "";
+                int lineNum = 0;
+                foreach (var eachLog in gameLogs)
+                {
+                    txtGameLog.Text += eachLog + Environment.NewLine;
+                }
+
+                if (resp.info.summary.isturn)
+                {
+                    if(isWatchMode())
+                    {
+                        changeToDirectionMode();
+                    }
+                }
+                else
+                {
+                    if(!isWatchMode())
+                    {
+                        changeToWatchMode();
+                    }
+                }
+            }
+            else
+                broadcastError(resp);
+        }
+
+        void changeToGuessMode()
+        {
+            gbTurn.Visible = true;
+            rbBack.Enabled = false;
+            rbFront.Enabled = false;
+            txtGuess.Enabled = true;
+            btnSubmit.Text = "Guess!";
+        }
+
+        void changeToWatchMode()
+        {
+            gbTurn.Visible = false;
+            rbBack.Enabled = false;
+            rbFront.Enabled = false;
+            txtGuess.Enabled = false;
+            btnSubmit.Text = "Watching";
+        }
+
+        void changeToDirectionMode()
+        {
+            gbTurn.Visible = true;
+            rbBack.Enabled = true;
+            rbFront.Enabled = true;
+            txtGuess.Enabled = false;
+            btnSubmit.Text = "Submit";
+        }
+
+        void showCorrect()
+        {
+            lblCorrect.Visible = true;
+            lblCorrect.ForeColor = Color.Green;
+            lblCorrect.Text = "Correct!";
+        }
+
+        void showIncorrect()
+        {
+            lblCorrect.Visible = true;
+            lblCorrect.ForeColor = Color.Red;
+            lblCorrect.Text = "Wrong!";
+        }
+
+        void hideCorrect()
+        {
+            lblCorrect.Visible = false;
+        }
+
+        bool isGuessMode()
+        {
+            return gbTurn.Visible && txtGuess.Enabled;
+        }
+
+        bool isWatchMode()
+        {
+            return !gbTurn.Visible;
+        }
+
+        bool isDirectionMode ()
+        {
+            return gbTurn.Visible && !txtGuess.Enabled;
         }
 
         private void btnLogOut_Click(object sender, EventArgs e)
@@ -187,6 +345,34 @@ namespace WordLinkUI
         private void button1_Click(object sender, EventArgs e)
         {
             updateLobby();
+        }
+
+        private void timerGameUpdate_Tick(object sender, EventArgs e)
+        {
+            updateGame();
+            hideCorrect();
+        }
+
+        private void btnJoinGame_Click(object sender, EventArgs e)
+        {
+            joinGame();
+        }
+
+        private void btnSubmit_Click(object sender, EventArgs e)
+        {
+            if(isDirectionMode())
+            {
+                submitDirection();
+            }
+            if(isGuessMode())
+            {
+                submitGuess();
+            }
+        }
+
+        private void btnLeaveGame_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

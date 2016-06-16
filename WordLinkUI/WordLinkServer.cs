@@ -176,6 +176,7 @@ namespace WordLinkUI
             WLServerResponse myResponse;
             string actionName = "joinGame";
             Dictionary<string, string> theParams = new Dictionary<string, string>();
+            theParams.Add("gameId", gameId);
             postTask = doPostRequest(actionName, theParams, true);
             try
             {
@@ -269,6 +270,57 @@ namespace WordLinkUI
             return myResponse;
         }
 
+        public async Task<WLServerResponse> submitDirection(string direction)
+        {
+            dynamic postTask;
+            dynamic postTaskResult;
+            dynamic newInfo = new ExpandoObject();
+            WLServerResponse myResponse;
+            string actionName = "submitDirection";
+            Dictionary<string, string> theParams = new Dictionary<string, string>();
+            theParams.Add("direction", direction);
+            postTask = doPostRequest(actionName, theParams, true);
+            try
+            {
+                postTaskResult = await postTask;
+                newInfo.success = postTaskResult.success;
+                myResponse = new WLServerResponse(true, newInfo);
+                this.authenticated = true;
+            }
+            catch (Exception e)
+            {
+                newInfo.error = "Failed to submit direction: " + e.Message;
+                myResponse = new WLServerResponse(false, newInfo);
+            }
+            return myResponse;
+        }
+
+        public async Task<WLServerResponse> submitGuess(string guess)
+        {
+            dynamic postTask;
+            dynamic postTaskResult;
+            dynamic newInfo = new ExpandoObject();
+            WLServerResponse myResponse;
+            string actionName = "submitGuess";
+            Dictionary<string, string> theParams = new Dictionary<string, string>();
+            theParams.Add("guess", guess);
+            postTask = doPostRequest(actionName, theParams, true);
+            try
+            {
+                postTaskResult = await postTask;
+                newInfo.isCorrect = postTaskResult.iscorrect;
+                myResponse = new WLServerResponse(true, newInfo);
+                this.authenticated = true;
+            }
+            catch (Exception e)
+            {
+                newInfo.error = "Failed to submit guess: " + e.Message;
+                myResponse = new WLServerResponse(false, newInfo);
+            }
+            return myResponse;
+        }
+
         #endregion
+
     }
 }

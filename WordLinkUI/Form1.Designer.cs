@@ -39,7 +39,6 @@
             this.rbSignIn = new System.Windows.Forms.RadioButton();
             this.rbSignUp = new System.Windows.Forms.RadioButton();
             this.btnSignIn = new System.Windows.Forms.Button();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.gbLobby = new System.Windows.Forms.GroupBox();
             this.btnJoinGame = new System.Windows.Forms.Button();
             this.btnCreateGame = new System.Windows.Forms.Button();
@@ -51,16 +50,22 @@
             this.timerLobbyUpdate = new System.Windows.Forms.Timer(this.components);
             this.gbGame = new System.Windows.Forms.GroupBox();
             this.lblGameID = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.listBoxPlayers = new System.Windows.Forms.ListBox();
+            this.lblCurrentPhrase = new System.Windows.Forms.Label();
+            this.rbFront = new System.Windows.Forms.RadioButton();
+            this.rbBack = new System.Windows.Forms.RadioButton();
+            this.txtGuess = new System.Windows.Forms.TextBox();
+            this.btnSubmit = new System.Windows.Forms.Button();
+            this.lblGuess = new System.Windows.Forms.Label();
+            this.timerGameUpdate = new System.Windows.Forms.Timer(this.components);
+            this.listViewPlayers = new System.Windows.Forms.ListView();
+            this.gbTurn = new System.Windows.Forms.GroupBox();
+            this.txtGameLog = new System.Windows.Forms.TextBox();
+            this.lblCorrect = new System.Windows.Forms.Label();
+            this.btnLeaveGame = new System.Windows.Forms.Button();
             this.gbLogin.SuspendLayout();
             this.gbLobby.SuspendLayout();
             this.gbGame.SuspendLayout();
+            this.gbTurn.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbLogin
@@ -193,6 +198,7 @@
             this.btnJoinGame.TabIndex = 0;
             this.btnJoinGame.Text = "Join Game";
             this.btnJoinGame.UseVisualStyleBackColor = true;
+            this.btnJoinGame.Click += new System.EventHandler(this.btnJoinGame_Click);
             // 
             // btnCreateGame
             // 
@@ -254,18 +260,16 @@
             // 
             // timerLobbyUpdate
             // 
-            this.timerLobbyUpdate.Interval = 2000;
+            this.timerLobbyUpdate.Interval = 4000;
             this.timerLobbyUpdate.Tick += new System.EventHandler(this.timerLobbyUpdate_Tick);
             // 
             // gbGame
             // 
-            this.gbGame.Controls.Add(this.listBoxPlayers);
-            this.gbGame.Controls.Add(this.label2);
-            this.gbGame.Controls.Add(this.button2);
-            this.gbGame.Controls.Add(this.textBox1);
-            this.gbGame.Controls.Add(this.radioButton2);
-            this.gbGame.Controls.Add(this.radioButton1);
-            this.gbGame.Controls.Add(this.label1);
+            this.gbGame.Controls.Add(this.lblCorrect);
+            this.gbGame.Controls.Add(this.txtGameLog);
+            this.gbGame.Controls.Add(this.gbTurn);
+            this.gbGame.Controls.Add(this.listViewPlayers);
+            this.gbGame.Controls.Add(this.lblCurrentPhrase);
             this.gbGame.Controls.Add(this.lblGameID);
             this.gbGame.Location = new System.Drawing.Point(703, 28);
             this.gbGame.Name = "gbGame";
@@ -273,80 +277,137 @@
             this.gbGame.TabIndex = 2;
             this.gbGame.TabStop = false;
             this.gbGame.Text = "Game";
+            this.gbGame.Visible = false;
             // 
             // lblGameID
             // 
-            this.lblGameID.AutoSize = true;
-            this.lblGameID.Location = new System.Drawing.Point(139, 32);
+            this.lblGameID.Location = new System.Drawing.Point(21, 27);
             this.lblGameID.Name = "lblGameID";
-            this.lblGameID.Size = new System.Drawing.Size(55, 13);
+            this.lblGameID.Size = new System.Drawing.Size(418, 18);
             this.lblGameID.TabIndex = 0;
             this.lblGameID.Text = "Game ID: ";
+            this.lblGameID.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label1
+            // lblCurrentPhrase
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(171, 68);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "lblCurrentPhrase";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblCurrentPhrase.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentPhrase.Location = new System.Drawing.Point(6, 61);
+            this.lblCurrentPhrase.Name = "lblCurrentPhrase";
+            this.lblCurrentPhrase.Size = new System.Drawing.Size(433, 34);
+            this.lblCurrentPhrase.TabIndex = 1;
+            this.lblCurrentPhrase.Text = "lblCurrentPhrase";
+            this.lblCurrentPhrase.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // radioButton1
+            // rbFront
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(79, 274);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(49, 17);
-            this.radioButton1.TabIndex = 2;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Front";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.rbFront.AutoSize = true;
+            this.rbFront.Enabled = false;
+            this.rbFront.Location = new System.Drawing.Point(6, 19);
+            this.rbFront.Name = "rbFront";
+            this.rbFront.Size = new System.Drawing.Size(49, 17);
+            this.rbFront.TabIndex = 2;
+            this.rbFront.TabStop = true;
+            this.rbFront.Text = "Front";
+            this.rbFront.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // rbBack
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(79, 298);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(50, 17);
-            this.radioButton2.TabIndex = 3;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Back";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.rbBack.AutoSize = true;
+            this.rbBack.Enabled = false;
+            this.rbBack.Location = new System.Drawing.Point(6, 42);
+            this.rbBack.Name = "rbBack";
+            this.rbBack.Size = new System.Drawing.Size(50, 17);
+            this.rbBack.TabIndex = 3;
+            this.rbBack.TabStop = true;
+            this.rbBack.Text = "Back";
+            this.rbBack.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // txtGuess
             // 
-            this.textBox1.Location = new System.Drawing.Point(189, 295);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 4;
+            this.txtGuess.Enabled = false;
+            this.txtGuess.Location = new System.Drawing.Point(66, 41);
+            this.txtGuess.Name = "txtGuess";
+            this.txtGuess.Size = new System.Drawing.Size(145, 20);
+            this.txtGuess.TabIndex = 4;
             // 
-            // button2
+            // btnSubmit
             // 
-            this.button2.Location = new System.Drawing.Point(142, 321);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(124, 28);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Submit!";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnSubmit.Location = new System.Drawing.Point(18, 67);
+            this.btnSubmit.Name = "btnSubmit";
+            this.btnSubmit.Size = new System.Drawing.Size(124, 28);
+            this.btnSubmit.TabIndex = 5;
+            this.btnSubmit.Text = "Submit!";
+            this.btnSubmit.UseVisualStyleBackColor = true;
+            this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
             // 
-            // label2
+            // lblGuess
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(218, 276);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 13);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Guess";
+            this.lblGuess.AutoSize = true;
+            this.lblGuess.Location = new System.Drawing.Point(124, 19);
+            this.lblGuess.Name = "lblGuess";
+            this.lblGuess.Size = new System.Drawing.Size(37, 13);
+            this.lblGuess.TabIndex = 6;
+            this.lblGuess.Text = "Guess";
             // 
-            // listBoxPlayers
+            // timerGameUpdate
             // 
-            this.listBoxPlayers.FormattingEnabled = true;
-            this.listBoxPlayers.Location = new System.Drawing.Point(79, 138);
-            this.listBoxPlayers.Name = "listBoxPlayers";
-            this.listBoxPlayers.Size = new System.Drawing.Size(120, 95);
-            this.listBoxPlayers.TabIndex = 7;
+            this.timerGameUpdate.Interval = 3000;
+            this.timerGameUpdate.Tick += new System.EventHandler(this.timerGameUpdate_Tick);
+            // 
+            // listViewPlayers
+            // 
+            this.listViewPlayers.Location = new System.Drawing.Point(103, 138);
+            this.listViewPlayers.Name = "listViewPlayers";
+            this.listViewPlayers.Size = new System.Drawing.Size(229, 97);
+            this.listViewPlayers.TabIndex = 7;
+            this.listViewPlayers.UseCompatibleStateImageBehavior = false;
+            this.listViewPlayers.View = System.Windows.Forms.View.Details;
+            // 
+            // gbTurn
+            // 
+            this.gbTurn.Controls.Add(this.btnLeaveGame);
+            this.gbTurn.Controls.Add(this.btnSubmit);
+            this.gbTurn.Controls.Add(this.txtGuess);
+            this.gbTurn.Controls.Add(this.rbBack);
+            this.gbTurn.Controls.Add(this.lblGuess);
+            this.gbTurn.Controls.Add(this.rbFront);
+            this.gbTurn.Location = new System.Drawing.Point(103, 241);
+            this.gbTurn.Name = "gbTurn";
+            this.gbTurn.Size = new System.Drawing.Size(217, 115);
+            this.gbTurn.TabIndex = 8;
+            this.gbTurn.TabStop = false;
+            this.gbTurn.Text = "Your Turn";
+            this.gbTurn.Visible = false;
+            // 
+            // txtGameLog
+            // 
+            this.txtGameLog.AcceptsReturn = true;
+            this.txtGameLog.Location = new System.Drawing.Point(14, 372);
+            this.txtGameLog.Multiline = true;
+            this.txtGameLog.Name = "txtGameLog";
+            this.txtGameLog.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txtGameLog.Size = new System.Drawing.Size(424, 109);
+            this.txtGameLog.TabIndex = 9;
+            // 
+            // lblCorrect
+            // 
+            this.lblCorrect.AutoSize = true;
+            this.lblCorrect.Location = new System.Drawing.Point(326, 280);
+            this.lblCorrect.Name = "lblCorrect";
+            this.lblCorrect.Size = new System.Drawing.Size(35, 13);
+            this.lblCorrect.TabIndex = 7;
+            this.lblCorrect.Text = "label1";
+            this.lblCorrect.Visible = false;
+            // 
+            // btnLeaveGame
+            // 
+            this.btnLeaveGame.Location = new System.Drawing.Point(159, 67);
+            this.btnLeaveGame.Name = "btnLeaveGame";
+            this.btnLeaveGame.Size = new System.Drawing.Size(52, 28);
+            this.btnLeaveGame.TabIndex = 7;
+            this.btnLeaveGame.Text = "Leave";
+            this.btnLeaveGame.UseVisualStyleBackColor = true;
+            this.btnLeaveGame.Click += new System.EventHandler(this.btnLeaveGame_Click);
             // 
             // Form1
             // 
@@ -365,6 +426,8 @@
             this.gbLobby.PerformLayout();
             this.gbGame.ResumeLayout(false);
             this.gbGame.PerformLayout();
+            this.gbTurn.ResumeLayout(false);
+            this.gbTurn.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -381,7 +444,6 @@
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.Button btnSignIn;
-        private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.GroupBox gbLobby;
         private System.Windows.Forms.Button btnCreateGame;
         private System.Windows.Forms.Button btnJoinGame;
@@ -393,13 +455,18 @@
         private System.Windows.Forms.Timer timerLobbyUpdate;
         private System.Windows.Forms.GroupBox gbGame;
         private System.Windows.Forms.Label lblGameID;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.ListBox listBoxPlayers;
+        private System.Windows.Forms.Label lblCurrentPhrase;
+        private System.Windows.Forms.Label lblGuess;
+        private System.Windows.Forms.Button btnSubmit;
+        private System.Windows.Forms.TextBox txtGuess;
+        private System.Windows.Forms.RadioButton rbBack;
+        private System.Windows.Forms.RadioButton rbFront;
+        private System.Windows.Forms.Timer timerGameUpdate;
+        private System.Windows.Forms.ListView listViewPlayers;
+        private System.Windows.Forms.GroupBox gbTurn;
+        private System.Windows.Forms.TextBox txtGameLog;
+        private System.Windows.Forms.Label lblCorrect;
+        private System.Windows.Forms.Button btnLeaveGame;
     }
 }
 
