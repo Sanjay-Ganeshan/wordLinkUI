@@ -22,7 +22,7 @@ namespace WordLinkUI
         private void Form1_Load(object sender, EventArgs e)
         {
             StateMachine.server = new WordLinkServer();
-            StateMachine.server.setServer("http://10.252.64.194:8080/");
+            //StateMachine.server.setServer("http://10.252.64.194:8080/");
         }
 
         private void rbSignUp_CheckedChanged(object sender, EventArgs e)
@@ -47,6 +47,7 @@ namespace WordLinkUI
 
         private void btnSignIn_Click(object sender, EventArgs e)
         {
+            StateMachine.server.setServer(txtServer.Text);
             StateMachine.server.setLoginInfo(this.txtUsername.Text, this.txtPassword.Text);
             lblConfirmPassError.Visible = false;
             if(rbSignIn.Checked)
@@ -95,7 +96,12 @@ namespace WordLinkUI
 
         void transitionFromGameToLobby()
         {
-
+            timerLobbyUpdate.Start();
+            btnLogOut.Visible = true;
+            gbLobby.Visible = true;
+            gbGame.Visible = false;
+            timerGameUpdate.Stop();
+            hideCorrect();
         }
 
         void transitionFromSignInToLobby()
@@ -277,6 +283,7 @@ namespace WordLinkUI
             rbBack.Enabled = false;
             rbFront.Enabled = false;
             txtGuess.Enabled = true;
+            btnLeaveGame.Visible = false;
             btnSubmit.Text = "Guess!";
         }
 
@@ -286,6 +293,7 @@ namespace WordLinkUI
             rbBack.Enabled = false;
             rbFront.Enabled = false;
             txtGuess.Enabled = false;
+            btnLeaveGame.Visible = false;
             btnSubmit.Text = "Watching";
         }
 
@@ -295,6 +303,7 @@ namespace WordLinkUI
             rbBack.Enabled = true;
             rbFront.Enabled = true;
             txtGuess.Enabled = false;
+            btnLeaveGame.Visible = true;
             btnSubmit.Text = "Submit";
         }
 
@@ -370,9 +379,20 @@ namespace WordLinkUI
             }
         }
 
+        async void leaveGame()
+        {
+            WLServerResponse resp = await StateMachine.server.leaveGame();
+            if (resp.worked)
+            {
+                transitionFromGameToLobby();
+            }
+            else
+                broadcastError(resp);
+        }
+
         private void btnLeaveGame_Click(object sender, EventArgs e)
         {
-
+            leaveGame();
         }
     }
 }

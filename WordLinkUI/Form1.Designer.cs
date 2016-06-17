@@ -30,38 +30,40 @@
         {
             this.components = new System.ComponentModel.Container();
             this.gbLogin = new System.Windows.Forms.GroupBox();
-            this.txtUsername = new System.Windows.Forms.TextBox();
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.lblUsername = new System.Windows.Forms.Label();
-            this.lblPassword = new System.Windows.Forms.Label();
-            this.txtConfirm = new System.Windows.Forms.TextBox();
-            this.lblConfirmPassword = new System.Windows.Forms.Label();
-            this.rbSignIn = new System.Windows.Forms.RadioButton();
-            this.rbSignUp = new System.Windows.Forms.RadioButton();
-            this.btnSignIn = new System.Windows.Forms.Button();
-            this.gbLobby = new System.Windows.Forms.GroupBox();
-            this.btnJoinGame = new System.Windows.Forms.Button();
-            this.btnCreateGame = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.lblConfirmPassError = new System.Windows.Forms.Label();
-            this.btnLogOut = new System.Windows.Forms.Button();
-            this.lboxGameList = new System.Windows.Forms.ListBox();
+            this.btnSignIn = new System.Windows.Forms.Button();
+            this.rbSignUp = new System.Windows.Forms.RadioButton();
+            this.rbSignIn = new System.Windows.Forms.RadioButton();
+            this.lblConfirmPassword = new System.Windows.Forms.Label();
+            this.txtConfirm = new System.Windows.Forms.TextBox();
+            this.lblPassword = new System.Windows.Forms.Label();
+            this.lblUsername = new System.Windows.Forms.Label();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.txtUsername = new System.Windows.Forms.TextBox();
+            this.gbLobby = new System.Windows.Forms.GroupBox();
             this.lblLobbyCurrentUser = new System.Windows.Forms.Label();
+            this.lboxGameList = new System.Windows.Forms.ListBox();
+            this.btnLogOut = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnCreateGame = new System.Windows.Forms.Button();
+            this.btnJoinGame = new System.Windows.Forms.Button();
             this.timerLobbyUpdate = new System.Windows.Forms.Timer(this.components);
             this.gbGame = new System.Windows.Forms.GroupBox();
-            this.lblGameID = new System.Windows.Forms.Label();
-            this.lblCurrentPhrase = new System.Windows.Forms.Label();
-            this.rbFront = new System.Windows.Forms.RadioButton();
-            this.rbBack = new System.Windows.Forms.RadioButton();
-            this.txtGuess = new System.Windows.Forms.TextBox();
-            this.btnSubmit = new System.Windows.Forms.Button();
-            this.lblGuess = new System.Windows.Forms.Label();
-            this.timerGameUpdate = new System.Windows.Forms.Timer(this.components);
-            this.listViewPlayers = new System.Windows.Forms.ListView();
-            this.gbTurn = new System.Windows.Forms.GroupBox();
-            this.txtGameLog = new System.Windows.Forms.TextBox();
             this.lblCorrect = new System.Windows.Forms.Label();
+            this.txtGameLog = new System.Windows.Forms.TextBox();
+            this.gbTurn = new System.Windows.Forms.GroupBox();
             this.btnLeaveGame = new System.Windows.Forms.Button();
+            this.btnSubmit = new System.Windows.Forms.Button();
+            this.txtGuess = new System.Windows.Forms.TextBox();
+            this.rbBack = new System.Windows.Forms.RadioButton();
+            this.lblGuess = new System.Windows.Forms.Label();
+            this.rbFront = new System.Windows.Forms.RadioButton();
+            this.listViewPlayers = new System.Windows.Forms.ListView();
+            this.lblCurrentPhrase = new System.Windows.Forms.Label();
+            this.lblGameID = new System.Windows.Forms.Label();
+            this.timerGameUpdate = new System.Windows.Forms.Timer(this.components);
+            this.lblServer = new System.Windows.Forms.Label();
+            this.txtServer = new System.Windows.Forms.TextBox();
             this.gbLogin.SuspendLayout();
             this.gbLobby.SuspendLayout();
             this.gbGame.SuspendLayout();
@@ -70,6 +72,8 @@
             // 
             // gbLogin
             // 
+            this.gbLogin.Controls.Add(this.txtServer);
+            this.gbLogin.Controls.Add(this.lblServer);
             this.gbLogin.Controls.Add(this.lblConfirmPassError);
             this.gbLogin.Controls.Add(this.btnSignIn);
             this.gbLogin.Controls.Add(this.rbSignUp);
@@ -82,80 +86,36 @@
             this.gbLogin.Controls.Add(this.txtUsername);
             this.gbLogin.Location = new System.Drawing.Point(31, 30);
             this.gbLogin.Name = "gbLogin";
-            this.gbLogin.Size = new System.Drawing.Size(213, 195);
+            this.gbLogin.Size = new System.Drawing.Size(213, 233);
             this.gbLogin.TabIndex = 0;
             this.gbLogin.TabStop = false;
             this.gbLogin.Text = "Login Controls";
             // 
-            // txtUsername
+            // lblConfirmPassError
             // 
-            this.txtUsername.Location = new System.Drawing.Point(80, 59);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(127, 20);
-            this.txtUsername.TabIndex = 0;
+            this.lblConfirmPassError.AutoSize = true;
+            this.lblConfirmPassError.ForeColor = System.Drawing.Color.Red;
+            this.lblConfirmPassError.Location = new System.Drawing.Point(82, 164);
+            this.lblConfirmPassError.Name = "lblConfirmPassError";
+            this.lblConfirmPassError.Size = new System.Drawing.Size(125, 13);
+            this.lblConfirmPassError.TabIndex = 2;
+            this.lblConfirmPassError.Text = "X Passwords must match";
+            this.lblConfirmPassError.Visible = false;
             // 
-            // txtPassword
+            // btnSignIn
             // 
-            this.txtPassword.Location = new System.Drawing.Point(80, 86);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(127, 20);
-            this.txtPassword.TabIndex = 1;
-            this.txtPassword.UseSystemPasswordChar = true;
-            // 
-            // lblUsername
-            // 
-            this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(12, 62);
-            this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(58, 13);
-            this.lblUsername.TabIndex = 2;
-            this.lblUsername.Text = "Username:";
-            // 
-            // lblPassword
-            // 
-            this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(12, 89);
-            this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(56, 13);
-            this.lblPassword.TabIndex = 3;
-            this.lblPassword.Text = "Password:";
-            // 
-            // txtConfirm
-            // 
-            this.txtConfirm.Location = new System.Drawing.Point(80, 112);
-            this.txtConfirm.Name = "txtConfirm";
-            this.txtConfirm.Size = new System.Drawing.Size(127, 20);
-            this.txtConfirm.TabIndex = 4;
-            this.txtConfirm.UseSystemPasswordChar = true;
-            this.txtConfirm.Visible = false;
-            // 
-            // lblConfirmPassword
-            // 
-            this.lblConfirmPassword.AutoSize = true;
-            this.lblConfirmPassword.Location = new System.Drawing.Point(12, 115);
-            this.lblConfirmPassword.Name = "lblConfirmPassword";
-            this.lblConfirmPassword.Size = new System.Drawing.Size(45, 13);
-            this.lblConfirmPassword.TabIndex = 5;
-            this.lblConfirmPassword.Text = "Confirm:";
-            this.lblConfirmPassword.Visible = false;
-            // 
-            // rbSignIn
-            // 
-            this.rbSignIn.AutoSize = true;
-            this.rbSignIn.Checked = true;
-            this.rbSignIn.Location = new System.Drawing.Point(28, 20);
-            this.rbSignIn.Name = "rbSignIn";
-            this.rbSignIn.Size = new System.Drawing.Size(57, 17);
-            this.rbSignIn.TabIndex = 6;
-            this.rbSignIn.TabStop = true;
-            this.rbSignIn.Text = "Sign in";
-            this.rbSignIn.UseVisualStyleBackColor = true;
-            this.rbSignIn.CheckedChanged += new System.EventHandler(this.rbSignIn_CheckedChanged);
+            this.btnSignIn.Location = new System.Drawing.Point(28, 195);
+            this.btnSignIn.Name = "btnSignIn";
+            this.btnSignIn.Size = new System.Drawing.Size(148, 21);
+            this.btnSignIn.TabIndex = 8;
+            this.btnSignIn.Text = "Sign In";
+            this.btnSignIn.UseVisualStyleBackColor = true;
+            this.btnSignIn.Click += new System.EventHandler(this.btnSignIn_Click);
             // 
             // rbSignUp
             // 
             this.rbSignUp.AutoSize = true;
-            this.rbSignUp.Location = new System.Drawing.Point(134, 20);
+            this.rbSignUp.Location = new System.Drawing.Point(134, 48);
             this.rbSignUp.Name = "rbSignUp";
             this.rbSignUp.Size = new System.Drawing.Size(63, 17);
             this.rbSignUp.TabIndex = 7;
@@ -164,15 +124,70 @@
             this.rbSignUp.UseVisualStyleBackColor = true;
             this.rbSignUp.CheckedChanged += new System.EventHandler(this.rbSignUp_CheckedChanged);
             // 
-            // btnSignIn
+            // rbSignIn
             // 
-            this.btnSignIn.Location = new System.Drawing.Point(28, 167);
-            this.btnSignIn.Name = "btnSignIn";
-            this.btnSignIn.Size = new System.Drawing.Size(148, 21);
-            this.btnSignIn.TabIndex = 8;
-            this.btnSignIn.Text = "Sign In";
-            this.btnSignIn.UseVisualStyleBackColor = true;
-            this.btnSignIn.Click += new System.EventHandler(this.btnSignIn_Click);
+            this.rbSignIn.AutoSize = true;
+            this.rbSignIn.Checked = true;
+            this.rbSignIn.Location = new System.Drawing.Point(28, 48);
+            this.rbSignIn.Name = "rbSignIn";
+            this.rbSignIn.Size = new System.Drawing.Size(57, 17);
+            this.rbSignIn.TabIndex = 6;
+            this.rbSignIn.TabStop = true;
+            this.rbSignIn.Text = "Sign in";
+            this.rbSignIn.UseVisualStyleBackColor = true;
+            this.rbSignIn.CheckedChanged += new System.EventHandler(this.rbSignIn_CheckedChanged);
+            // 
+            // lblConfirmPassword
+            // 
+            this.lblConfirmPassword.AutoSize = true;
+            this.lblConfirmPassword.Location = new System.Drawing.Point(12, 143);
+            this.lblConfirmPassword.Name = "lblConfirmPassword";
+            this.lblConfirmPassword.Size = new System.Drawing.Size(45, 13);
+            this.lblConfirmPassword.TabIndex = 5;
+            this.lblConfirmPassword.Text = "Confirm:";
+            this.lblConfirmPassword.Visible = false;
+            // 
+            // txtConfirm
+            // 
+            this.txtConfirm.Location = new System.Drawing.Point(80, 140);
+            this.txtConfirm.Name = "txtConfirm";
+            this.txtConfirm.Size = new System.Drawing.Size(127, 20);
+            this.txtConfirm.TabIndex = 4;
+            this.txtConfirm.UseSystemPasswordChar = true;
+            this.txtConfirm.Visible = false;
+            // 
+            // lblPassword
+            // 
+            this.lblPassword.AutoSize = true;
+            this.lblPassword.Location = new System.Drawing.Point(12, 117);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(56, 13);
+            this.lblPassword.TabIndex = 3;
+            this.lblPassword.Text = "Password:";
+            // 
+            // lblUsername
+            // 
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.Location = new System.Drawing.Point(12, 90);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(58, 13);
+            this.lblUsername.TabIndex = 2;
+            this.lblUsername.Text = "Username:";
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(80, 114);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(127, 20);
+            this.txtPassword.TabIndex = 1;
+            this.txtPassword.UseSystemPasswordChar = true;
+            // 
+            // txtUsername
+            // 
+            this.txtUsername.Location = new System.Drawing.Point(80, 87);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Size = new System.Drawing.Size(127, 20);
+            this.txtUsername.TabIndex = 0;
             // 
             // gbLobby
             // 
@@ -190,46 +205,22 @@
             this.gbLobby.Text = "Lobby";
             this.gbLobby.Visible = false;
             // 
-            // btnJoinGame
+            // lblLobbyCurrentUser
             // 
-            this.btnJoinGame.Location = new System.Drawing.Point(243, 456);
-            this.btnJoinGame.Name = "btnJoinGame";
-            this.btnJoinGame.Size = new System.Drawing.Size(135, 26);
-            this.btnJoinGame.TabIndex = 0;
-            this.btnJoinGame.Text = "Join Game";
-            this.btnJoinGame.UseVisualStyleBackColor = true;
-            this.btnJoinGame.Click += new System.EventHandler(this.btnJoinGame_Click);
+            this.lblLobbyCurrentUser.AutoSize = true;
+            this.lblLobbyCurrentUser.Location = new System.Drawing.Point(97, 27);
+            this.lblLobbyCurrentUser.Name = "lblLobbyCurrentUser";
+            this.lblLobbyCurrentUser.Size = new System.Drawing.Size(116, 13);
+            this.lblLobbyCurrentUser.TabIndex = 4;
+            this.lblLobbyCurrentUser.Text = "Currently Logged in As:";
             // 
-            // btnCreateGame
+            // lboxGameList
             // 
-            this.btnCreateGame.Location = new System.Drawing.Point(6, 456);
-            this.btnCreateGame.Name = "btnCreateGame";
-            this.btnCreateGame.Size = new System.Drawing.Size(135, 26);
-            this.btnCreateGame.TabIndex = 1;
-            this.btnCreateGame.Text = "Create Game";
-            this.btnCreateGame.UseVisualStyleBackColor = true;
-            this.btnCreateGame.Click += new System.EventHandler(this.btnCreateGame_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(166, 452);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(45, 35);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "↺";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // lblConfirmPassError
-            // 
-            this.lblConfirmPassError.AutoSize = true;
-            this.lblConfirmPassError.ForeColor = System.Drawing.Color.Red;
-            this.lblConfirmPassError.Location = new System.Drawing.Point(82, 136);
-            this.lblConfirmPassError.Name = "lblConfirmPassError";
-            this.lblConfirmPassError.Size = new System.Drawing.Size(125, 13);
-            this.lblConfirmPassError.TabIndex = 2;
-            this.lblConfirmPassError.Text = "X Passwords must match";
-            this.lblConfirmPassError.Visible = false;
+            this.lboxGameList.FormattingEnabled = true;
+            this.lboxGameList.Location = new System.Drawing.Point(7, 55);
+            this.lboxGameList.Name = "lboxGameList";
+            this.lboxGameList.Size = new System.Drawing.Size(371, 381);
+            this.lboxGameList.TabIndex = 3;
             // 
             // btnLogOut
             // 
@@ -241,22 +232,35 @@
             this.btnLogOut.UseVisualStyleBackColor = true;
             this.btnLogOut.Click += new System.EventHandler(this.btnLogOut_Click);
             // 
-            // lboxGameList
+            // button1
             // 
-            this.lboxGameList.FormattingEnabled = true;
-            this.lboxGameList.Location = new System.Drawing.Point(7, 55);
-            this.lboxGameList.Name = "lboxGameList";
-            this.lboxGameList.Size = new System.Drawing.Size(371, 381);
-            this.lboxGameList.TabIndex = 3;
+            this.button1.Location = new System.Drawing.Point(166, 452);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(45, 35);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "↺";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // lblLobbyCurrentUser
+            // btnCreateGame
             // 
-            this.lblLobbyCurrentUser.AutoSize = true;
-            this.lblLobbyCurrentUser.Location = new System.Drawing.Point(97, 27);
-            this.lblLobbyCurrentUser.Name = "lblLobbyCurrentUser";
-            this.lblLobbyCurrentUser.Size = new System.Drawing.Size(116, 13);
-            this.lblLobbyCurrentUser.TabIndex = 4;
-            this.lblLobbyCurrentUser.Text = "Currently Logged in As:";
+            this.btnCreateGame.Location = new System.Drawing.Point(6, 456);
+            this.btnCreateGame.Name = "btnCreateGame";
+            this.btnCreateGame.Size = new System.Drawing.Size(135, 26);
+            this.btnCreateGame.TabIndex = 1;
+            this.btnCreateGame.Text = "Create Game";
+            this.btnCreateGame.UseVisualStyleBackColor = true;
+            this.btnCreateGame.Click += new System.EventHandler(this.btnCreateGame_Click);
+            // 
+            // btnJoinGame
+            // 
+            this.btnJoinGame.Location = new System.Drawing.Point(243, 456);
+            this.btnJoinGame.Name = "btnJoinGame";
+            this.btnJoinGame.Size = new System.Drawing.Size(135, 26);
+            this.btnJoinGame.TabIndex = 0;
+            this.btnJoinGame.Text = "Join Game";
+            this.btnJoinGame.UseVisualStyleBackColor = true;
+            this.btnJoinGame.Click += new System.EventHandler(this.btnJoinGame_Click);
             // 
             // timerLobbyUpdate
             // 
@@ -265,6 +269,7 @@
             // 
             // gbGame
             // 
+            this.gbGame.Controls.Add(this.btnLeaveGame);
             this.gbGame.Controls.Add(this.lblCorrect);
             this.gbGame.Controls.Add(this.txtGameLog);
             this.gbGame.Controls.Add(this.gbTurn);
@@ -279,36 +284,68 @@
             this.gbGame.Text = "Game";
             this.gbGame.Visible = false;
             // 
-            // lblGameID
+            // lblCorrect
             // 
-            this.lblGameID.Location = new System.Drawing.Point(21, 27);
-            this.lblGameID.Name = "lblGameID";
-            this.lblGameID.Size = new System.Drawing.Size(418, 18);
-            this.lblGameID.TabIndex = 0;
-            this.lblGameID.Text = "Game ID: ";
-            this.lblGameID.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblCorrect.AutoSize = true;
+            this.lblCorrect.Location = new System.Drawing.Point(326, 280);
+            this.lblCorrect.Name = "lblCorrect";
+            this.lblCorrect.Size = new System.Drawing.Size(35, 13);
+            this.lblCorrect.TabIndex = 7;
+            this.lblCorrect.Text = "label1";
+            this.lblCorrect.Visible = false;
             // 
-            // lblCurrentPhrase
+            // txtGameLog
             // 
-            this.lblCurrentPhrase.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCurrentPhrase.Location = new System.Drawing.Point(6, 61);
-            this.lblCurrentPhrase.Name = "lblCurrentPhrase";
-            this.lblCurrentPhrase.Size = new System.Drawing.Size(433, 34);
-            this.lblCurrentPhrase.TabIndex = 1;
-            this.lblCurrentPhrase.Text = "lblCurrentPhrase";
-            this.lblCurrentPhrase.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.txtGameLog.AcceptsReturn = true;
+            this.txtGameLog.Location = new System.Drawing.Point(14, 372);
+            this.txtGameLog.Multiline = true;
+            this.txtGameLog.Name = "txtGameLog";
+            this.txtGameLog.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txtGameLog.Size = new System.Drawing.Size(424, 109);
+            this.txtGameLog.TabIndex = 9;
             // 
-            // rbFront
+            // gbTurn
             // 
-            this.rbFront.AutoSize = true;
-            this.rbFront.Enabled = false;
-            this.rbFront.Location = new System.Drawing.Point(6, 19);
-            this.rbFront.Name = "rbFront";
-            this.rbFront.Size = new System.Drawing.Size(49, 17);
-            this.rbFront.TabIndex = 2;
-            this.rbFront.TabStop = true;
-            this.rbFront.Text = "Front";
-            this.rbFront.UseVisualStyleBackColor = true;
+            this.gbTurn.Controls.Add(this.btnSubmit);
+            this.gbTurn.Controls.Add(this.txtGuess);
+            this.gbTurn.Controls.Add(this.rbBack);
+            this.gbTurn.Controls.Add(this.lblGuess);
+            this.gbTurn.Controls.Add(this.rbFront);
+            this.gbTurn.Location = new System.Drawing.Point(130, 241);
+            this.gbTurn.Name = "gbTurn";
+            this.gbTurn.Size = new System.Drawing.Size(190, 115);
+            this.gbTurn.TabIndex = 8;
+            this.gbTurn.TabStop = false;
+            this.gbTurn.Text = "Your Turn";
+            this.gbTurn.Visible = false;
+            // 
+            // btnLeaveGame
+            // 
+            this.btnLeaveGame.Location = new System.Drawing.Point(14, 24);
+            this.btnLeaveGame.Name = "btnLeaveGame";
+            this.btnLeaveGame.Size = new System.Drawing.Size(75, 23);
+            this.btnLeaveGame.TabIndex = 7;
+            this.btnLeaveGame.Text = "Leave";
+            this.btnLeaveGame.UseVisualStyleBackColor = true;
+            this.btnLeaveGame.Click += new System.EventHandler(this.btnLeaveGame_Click);
+            // 
+            // btnSubmit
+            // 
+            this.btnSubmit.Location = new System.Drawing.Point(27, 67);
+            this.btnSubmit.Name = "btnSubmit";
+            this.btnSubmit.Size = new System.Drawing.Size(135, 28);
+            this.btnSubmit.TabIndex = 5;
+            this.btnSubmit.Text = "Submit!";
+            this.btnSubmit.UseVisualStyleBackColor = true;
+            this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
+            // 
+            // txtGuess
+            // 
+            this.txtGuess.Enabled = false;
+            this.txtGuess.Location = new System.Drawing.Point(66, 41);
+            this.txtGuess.Name = "txtGuess";
+            this.txtGuess.Size = new System.Drawing.Size(118, 20);
+            this.txtGuess.TabIndex = 4;
             // 
             // rbBack
             // 
@@ -322,37 +359,26 @@
             this.rbBack.Text = "Back";
             this.rbBack.UseVisualStyleBackColor = true;
             // 
-            // txtGuess
-            // 
-            this.txtGuess.Enabled = false;
-            this.txtGuess.Location = new System.Drawing.Point(66, 41);
-            this.txtGuess.Name = "txtGuess";
-            this.txtGuess.Size = new System.Drawing.Size(145, 20);
-            this.txtGuess.TabIndex = 4;
-            // 
-            // btnSubmit
-            // 
-            this.btnSubmit.Location = new System.Drawing.Point(18, 67);
-            this.btnSubmit.Name = "btnSubmit";
-            this.btnSubmit.Size = new System.Drawing.Size(124, 28);
-            this.btnSubmit.TabIndex = 5;
-            this.btnSubmit.Text = "Submit!";
-            this.btnSubmit.UseVisualStyleBackColor = true;
-            this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
-            // 
             // lblGuess
             // 
             this.lblGuess.AutoSize = true;
-            this.lblGuess.Location = new System.Drawing.Point(124, 19);
+            this.lblGuess.Location = new System.Drawing.Point(114, 21);
             this.lblGuess.Name = "lblGuess";
             this.lblGuess.Size = new System.Drawing.Size(37, 13);
             this.lblGuess.TabIndex = 6;
             this.lblGuess.Text = "Guess";
             // 
-            // timerGameUpdate
+            // rbFront
             // 
-            this.timerGameUpdate.Interval = 3000;
-            this.timerGameUpdate.Tick += new System.EventHandler(this.timerGameUpdate_Tick);
+            this.rbFront.AutoSize = true;
+            this.rbFront.Enabled = false;
+            this.rbFront.Location = new System.Drawing.Point(6, 19);
+            this.rbFront.Name = "rbFront";
+            this.rbFront.Size = new System.Drawing.Size(49, 17);
+            this.rbFront.TabIndex = 2;
+            this.rbFront.TabStop = true;
+            this.rbFront.Text = "Front";
+            this.rbFront.UseVisualStyleBackColor = true;
             // 
             // listViewPlayers
             // 
@@ -363,51 +389,45 @@
             this.listViewPlayers.UseCompatibleStateImageBehavior = false;
             this.listViewPlayers.View = System.Windows.Forms.View.Details;
             // 
-            // gbTurn
+            // lblCurrentPhrase
             // 
-            this.gbTurn.Controls.Add(this.btnLeaveGame);
-            this.gbTurn.Controls.Add(this.btnSubmit);
-            this.gbTurn.Controls.Add(this.txtGuess);
-            this.gbTurn.Controls.Add(this.rbBack);
-            this.gbTurn.Controls.Add(this.lblGuess);
-            this.gbTurn.Controls.Add(this.rbFront);
-            this.gbTurn.Location = new System.Drawing.Point(103, 241);
-            this.gbTurn.Name = "gbTurn";
-            this.gbTurn.Size = new System.Drawing.Size(217, 115);
-            this.gbTurn.TabIndex = 8;
-            this.gbTurn.TabStop = false;
-            this.gbTurn.Text = "Your Turn";
-            this.gbTurn.Visible = false;
+            this.lblCurrentPhrase.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentPhrase.Location = new System.Drawing.Point(6, 61);
+            this.lblCurrentPhrase.Name = "lblCurrentPhrase";
+            this.lblCurrentPhrase.Size = new System.Drawing.Size(433, 34);
+            this.lblCurrentPhrase.TabIndex = 1;
+            this.lblCurrentPhrase.Text = "lblCurrentPhrase";
+            this.lblCurrentPhrase.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // txtGameLog
+            // lblGameID
             // 
-            this.txtGameLog.AcceptsReturn = true;
-            this.txtGameLog.Location = new System.Drawing.Point(14, 372);
-            this.txtGameLog.Multiline = true;
-            this.txtGameLog.Name = "txtGameLog";
-            this.txtGameLog.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txtGameLog.Size = new System.Drawing.Size(424, 109);
-            this.txtGameLog.TabIndex = 9;
+            this.lblGameID.Location = new System.Drawing.Point(21, 27);
+            this.lblGameID.Name = "lblGameID";
+            this.lblGameID.Size = new System.Drawing.Size(418, 18);
+            this.lblGameID.TabIndex = 0;
+            this.lblGameID.Text = "Game ID: ";
+            this.lblGameID.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // lblCorrect
+            // timerGameUpdate
             // 
-            this.lblCorrect.AutoSize = true;
-            this.lblCorrect.Location = new System.Drawing.Point(326, 280);
-            this.lblCorrect.Name = "lblCorrect";
-            this.lblCorrect.Size = new System.Drawing.Size(35, 13);
-            this.lblCorrect.TabIndex = 7;
-            this.lblCorrect.Text = "label1";
-            this.lblCorrect.Visible = false;
+            this.timerGameUpdate.Interval = 3000;
+            this.timerGameUpdate.Tick += new System.EventHandler(this.timerGameUpdate_Tick);
             // 
-            // btnLeaveGame
+            // lblServer
             // 
-            this.btnLeaveGame.Location = new System.Drawing.Point(159, 67);
-            this.btnLeaveGame.Name = "btnLeaveGame";
-            this.btnLeaveGame.Size = new System.Drawing.Size(52, 28);
-            this.btnLeaveGame.TabIndex = 7;
-            this.btnLeaveGame.Text = "Leave";
-            this.btnLeaveGame.UseVisualStyleBackColor = true;
-            this.btnLeaveGame.Click += new System.EventHandler(this.btnLeaveGame_Click);
+            this.lblServer.AutoSize = true;
+            this.lblServer.Location = new System.Drawing.Point(12, 25);
+            this.lblServer.Name = "lblServer";
+            this.lblServer.Size = new System.Drawing.Size(41, 13);
+            this.lblServer.TabIndex = 9;
+            this.lblServer.Text = "Server:";
+            // 
+            // txtServer
+            // 
+            this.txtServer.Location = new System.Drawing.Point(80, 18);
+            this.txtServer.Name = "txtServer";
+            this.txtServer.Size = new System.Drawing.Size(127, 20);
+            this.txtServer.TabIndex = 10;
             // 
             // Form1
             // 
@@ -467,6 +487,8 @@
         private System.Windows.Forms.TextBox txtGameLog;
         private System.Windows.Forms.Label lblCorrect;
         private System.Windows.Forms.Button btnLeaveGame;
+        private System.Windows.Forms.TextBox txtServer;
+        private System.Windows.Forms.Label lblServer;
     }
 }
 
