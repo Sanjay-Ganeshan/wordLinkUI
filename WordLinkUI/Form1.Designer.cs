@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.gbLogin = new System.Windows.Forms.GroupBox();
+            this.txtServer = new System.Windows.Forms.TextBox();
+            this.lblServer = new System.Windows.Forms.Label();
             this.lblConfirmPassError = new System.Windows.Forms.Label();
             this.btnSignIn = new System.Windows.Forms.Button();
             this.rbSignUp = new System.Windows.Forms.RadioButton();
@@ -49,10 +51,10 @@
             this.btnJoinGame = new System.Windows.Forms.Button();
             this.timerLobbyUpdate = new System.Windows.Forms.Timer(this.components);
             this.gbGame = new System.Windows.Forms.GroupBox();
+            this.btnLeaveGame = new System.Windows.Forms.Button();
             this.lblCorrect = new System.Windows.Forms.Label();
             this.txtGameLog = new System.Windows.Forms.TextBox();
             this.gbTurn = new System.Windows.Forms.GroupBox();
-            this.btnLeaveGame = new System.Windows.Forms.Button();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.txtGuess = new System.Windows.Forms.TextBox();
             this.rbBack = new System.Windows.Forms.RadioButton();
@@ -62,8 +64,10 @@
             this.lblCurrentPhrase = new System.Windows.Forms.Label();
             this.lblGameID = new System.Windows.Forms.Label();
             this.timerGameUpdate = new System.Windows.Forms.Timer(this.components);
-            this.lblServer = new System.Windows.Forms.Label();
-            this.txtServer = new System.Windows.Forms.TextBox();
+            this.lblMessage = new System.Windows.Forms.Label();
+            this.lblTimeLeft = new System.Windows.Forms.Label();
+            this.lblTime = new System.Windows.Forms.Label();
+            this.timerGuessTime = new System.Windows.Forms.Timer(this.components);
             this.gbLogin.SuspendLayout();
             this.gbLobby.SuspendLayout();
             this.gbGame.SuspendLayout();
@@ -90,6 +94,22 @@
             this.gbLogin.TabIndex = 0;
             this.gbLogin.TabStop = false;
             this.gbLogin.Text = "Login Controls";
+            // 
+            // txtServer
+            // 
+            this.txtServer.Location = new System.Drawing.Point(80, 18);
+            this.txtServer.Name = "txtServer";
+            this.txtServer.Size = new System.Drawing.Size(127, 20);
+            this.txtServer.TabIndex = 10;
+            // 
+            // lblServer
+            // 
+            this.lblServer.AutoSize = true;
+            this.lblServer.Location = new System.Drawing.Point(12, 25);
+            this.lblServer.Name = "lblServer";
+            this.lblServer.Size = new System.Drawing.Size(41, 13);
+            this.lblServer.TabIndex = 9;
+            this.lblServer.Text = "Server:";
             // 
             // lblConfirmPassError
             // 
@@ -284,10 +304,20 @@
             this.gbGame.Text = "Game";
             this.gbGame.Visible = false;
             // 
+            // btnLeaveGame
+            // 
+            this.btnLeaveGame.Location = new System.Drawing.Point(14, 24);
+            this.btnLeaveGame.Name = "btnLeaveGame";
+            this.btnLeaveGame.Size = new System.Drawing.Size(75, 23);
+            this.btnLeaveGame.TabIndex = 7;
+            this.btnLeaveGame.Text = "Leave";
+            this.btnLeaveGame.UseVisualStyleBackColor = true;
+            this.btnLeaveGame.Click += new System.EventHandler(this.btnLeaveGame_Click);
+            // 
             // lblCorrect
             // 
             this.lblCorrect.AutoSize = true;
-            this.lblCorrect.Location = new System.Drawing.Point(326, 280);
+            this.lblCorrect.Location = new System.Drawing.Point(11, 289);
             this.lblCorrect.Name = "lblCorrect";
             this.lblCorrect.Size = new System.Drawing.Size(35, 13);
             this.lblCorrect.TabIndex = 7;
@@ -306,6 +336,8 @@
             // 
             // gbTurn
             // 
+            this.gbTurn.Controls.Add(this.lblTime);
+            this.gbTurn.Controls.Add(this.lblTimeLeft);
             this.gbTurn.Controls.Add(this.btnSubmit);
             this.gbTurn.Controls.Add(this.txtGuess);
             this.gbTurn.Controls.Add(this.rbBack);
@@ -313,21 +345,11 @@
             this.gbTurn.Controls.Add(this.rbFront);
             this.gbTurn.Location = new System.Drawing.Point(130, 241);
             this.gbTurn.Name = "gbTurn";
-            this.gbTurn.Size = new System.Drawing.Size(190, 115);
+            this.gbTurn.Size = new System.Drawing.Size(263, 115);
             this.gbTurn.TabIndex = 8;
             this.gbTurn.TabStop = false;
             this.gbTurn.Text = "Your Turn";
             this.gbTurn.Visible = false;
-            // 
-            // btnLeaveGame
-            // 
-            this.btnLeaveGame.Location = new System.Drawing.Point(14, 24);
-            this.btnLeaveGame.Name = "btnLeaveGame";
-            this.btnLeaveGame.Size = new System.Drawing.Size(75, 23);
-            this.btnLeaveGame.TabIndex = 7;
-            this.btnLeaveGame.Text = "Leave";
-            this.btnLeaveGame.UseVisualStyleBackColor = true;
-            this.btnLeaveGame.Click += new System.EventHandler(this.btnLeaveGame_Click);
             // 
             // btnSubmit
             // 
@@ -341,11 +363,13 @@
             // 
             // txtGuess
             // 
+            this.txtGuess.AcceptsReturn = true;
             this.txtGuess.Enabled = false;
             this.txtGuess.Location = new System.Drawing.Point(66, 41);
             this.txtGuess.Name = "txtGuess";
             this.txtGuess.Size = new System.Drawing.Size(118, 20);
             this.txtGuess.TabIndex = 4;
+            this.txtGuess.TextChanged += new System.EventHandler(this.txtGuess_TextChanged);
             // 
             // rbBack
             // 
@@ -413,27 +437,46 @@
             this.timerGameUpdate.Interval = 3000;
             this.timerGameUpdate.Tick += new System.EventHandler(this.timerGameUpdate_Tick);
             // 
-            // lblServer
+            // lblMessage
             // 
-            this.lblServer.AutoSize = true;
-            this.lblServer.Location = new System.Drawing.Point(12, 25);
-            this.lblServer.Name = "lblServer";
-            this.lblServer.Size = new System.Drawing.Size(41, 13);
-            this.lblServer.TabIndex = 9;
-            this.lblServer.Text = "Server:";
+            this.lblMessage.AutoSize = true;
+            this.lblMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMessage.Location = new System.Drawing.Point(3, 395);
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(96, 24);
+            this.lblMessage.TabIndex = 3;
+            this.lblMessage.Text = "Messages";
             // 
-            // txtServer
+            // lblTimeLeft
             // 
-            this.txtServer.Location = new System.Drawing.Point(80, 18);
-            this.txtServer.Name = "txtServer";
-            this.txtServer.Size = new System.Drawing.Size(127, 20);
-            this.txtServer.TabIndex = 10;
+            this.lblTimeLeft.AutoSize = true;
+            this.lblTimeLeft.Location = new System.Drawing.Point(196, 21);
+            this.lblTimeLeft.Name = "lblTimeLeft";
+            this.lblTimeLeft.Size = new System.Drawing.Size(54, 13);
+            this.lblTimeLeft.TabIndex = 7;
+            this.lblTimeLeft.Text = "Time Left:";
+            // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.ForeColor = System.Drawing.Color.Red;
+            this.lblTime.Location = new System.Drawing.Point(217, 44);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(13, 13);
+            this.lblTime.TabIndex = 8;
+            this.lblTime.Text = "5";
+            // 
+            // timerGuessTime
+            // 
+            this.timerGuessTime.Interval = 1000;
+            this.timerGuessTime.Tick += new System.EventHandler(this.timerGuessTime_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1169, 557);
+            this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.gbGame);
             this.Controls.Add(this.gbLobby);
             this.Controls.Add(this.gbLogin);
@@ -449,6 +492,7 @@
             this.gbTurn.ResumeLayout(false);
             this.gbTurn.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -489,6 +533,10 @@
         private System.Windows.Forms.Button btnLeaveGame;
         private System.Windows.Forms.TextBox txtServer;
         private System.Windows.Forms.Label lblServer;
+        private System.Windows.Forms.Label lblMessage;
+        private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.Label lblTimeLeft;
+        private System.Windows.Forms.Timer timerGuessTime;
     }
 }
 

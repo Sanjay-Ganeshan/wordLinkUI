@@ -13,6 +13,7 @@ namespace WordLinkUI
 {
     public partial class Form1 : Form
     {
+        int timeLeftToGuess = 5;
 
         public Form1()
         {
@@ -47,7 +48,14 @@ namespace WordLinkUI
 
         private void btnSignIn_Click(object sender, EventArgs e)
         {
-            StateMachine.server.setServer(txtServer.Text);
+            try
+            {
+                StateMachine.server.setServer(txtServer.Text);
+            }
+            catch(Exception f)
+            {
+                
+            }
             StateMachine.server.setLoginInfo(this.txtUsername.Text, this.txtPassword.Text);
             lblConfirmPassError.Visible = false;
             if(rbSignIn.Checked)
@@ -77,7 +85,7 @@ namespace WordLinkUI
         public void broadcastError(WLServerResponse resp)
         {
             string s = resp.info.error;
-            MessageBox.Show(s);
+            lblMessage.Text = s;
         }
 
         private void btnCreateGame_Click(object sender, EventArgs e)
@@ -92,6 +100,7 @@ namespace WordLinkUI
             gbLobby.Visible = false;
             gbGame.Visible = true;
             timerGameUpdate.Start();
+            setUpGame();
         }
 
         void transitionFromGameToLobby()
@@ -125,6 +134,12 @@ namespace WordLinkUI
         void setUpLobby()
         {
             lblLobbyCurrentUser.Text = "Currently signed in as: " + StateMachine.server.getCurrentUser();
+            updateLobby();
+        }
+
+        void setUpGame()
+        {
+            updateGame();
         }
 
         async void createGame()
@@ -189,6 +204,7 @@ namespace WordLinkUI
         async void submitGuess()
         {
             string guess = txtGuess.Text;
+            timerGuessTime.Stop();
             WLServerResponse resp = await StateMachine.server.submitGuess(guess);
             if (resp.worked)
             {
@@ -201,10 +217,15 @@ namespace WordLinkUI
                     showIncorrect();
                 }
                 changeToWatchMode();
+                txtGuess.Text = "";
                 updateGame();
             }
             else
+            {
                 broadcastError(resp);
+                timeLeftToGuess = 5;
+                timerGuessTime.Start();
+            }
 
         }
 
@@ -255,7 +276,7 @@ namespace WordLinkUI
                 int lineNum = 0;
                 foreach (var eachLog in gameLogs)
                 {
-                    txtGameLog.Text += eachLog + Environment.NewLine;
+                    txtGameLog.Text += Environment.NewLine + eachLog;
                 }
 
                 if (resp.info.summary.isturn)
@@ -285,6 +306,11 @@ namespace WordLinkUI
             txtGuess.Enabled = true;
             btnLeaveGame.Visible = false;
             btnSubmit.Text = "Guess!";
+            lblTime.Text = "5";
+            lblTimeLeft.Visible = true;
+            lblTime.Visible = true;
+            timerGuessTime.Start();
+            timeLeftToGuess = 5;
         }
 
         void changeToWatchMode()
@@ -295,6 +321,7 @@ namespace WordLinkUI
             txtGuess.Enabled = false;
             btnLeaveGame.Visible = false;
             btnSubmit.Text = "Watching";
+            timerGuessTime.Stop();
         }
 
         void changeToDirectionMode()
@@ -305,6 +332,7 @@ namespace WordLinkUI
             txtGuess.Enabled = false;
             btnLeaveGame.Visible = true;
             btnSubmit.Text = "Submit";
+            timerGuessTime.Stop();
         }
 
         void showCorrect()
@@ -393,6 +421,26 @@ namespace WordLinkUI
         private void btnLeaveGame_Click(object sender, EventArgs e)
         {
             leaveGame();
+        }
+
+        private void txtGuess_TextChanged(object sender, EventArgs e)
+        {
+            if(txtGuess.Text.Contains("\n") && isGuessMode())
+            {
+                txtGuess.Text = txtGuess.Text.Replace("\n", "");
+                submitGuess();
+            }
+        }
+
+        private void timerGuessTime_Tick(object sender, EventArgs e)
+        {
+            timeLeftToGuess -= 1;
+            lblTime.Text = "" + timeLeftToGuess;
+            if(timeLeftToGuess == 0)
+            {
+                txtGuess.Text = "NO TIME";
+                submitGuess();
+            }
         }
     }
 }
